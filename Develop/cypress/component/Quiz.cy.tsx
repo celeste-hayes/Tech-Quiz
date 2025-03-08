@@ -2,7 +2,7 @@ import Quiz from "../../client/src/components/Quiz";
 
 describe("<Quiz />", () => {
     beforeEach(() => {
-        // API request to return fixture data
+        // GIVEN the API request returns quiz questions
         cy.intercept("GET", "/api/questions", { fixture: "questions.json" }).as("getQuestions");
 
         // Mount the Quiz component
@@ -22,11 +22,11 @@ describe("<Quiz />", () => {
         // THEN the quiz starts, and the start button disappears
         cy.contains("button", "Start Quiz").should("not.exist");
 
-        // Wait for the API call to finish
+        // Wait for questions to load
         cy.wait("@getQuestions");
 
         // THEN I should see the first question
-        cy.get("h2").should("be.visible");
+        cy.contains("h2", "Test question 1").should("be.visible");
     });
 
     // WHEN I answer a question
@@ -34,14 +34,14 @@ describe("<Quiz />", () => {
         cy.contains("button", "Start Quiz").click();
         cy.wait("@getQuestions");
 
-        // THEN I am presented with a question
-        cy.get("h2").should("contain", "Test question 1");
+        // THEN I should see the first question
+        cy.contains("h2", "Test question 1").should("be.visible");
 
         // WHEN I select the correct answer
-        cy.contains("button", "correct").click();
+        cy.contains("correct").click();
 
         // THEN the next question appears
-        cy.get("h2").should("contain", "Test question 2");
+        cy.contains("h2", "Test question 2").should("be.visible");
     });
 
     // WHEN all questions are answered
@@ -49,9 +49,9 @@ describe("<Quiz />", () => {
         cy.contains("button", "Start Quiz").click();
         cy.wait("@getQuestions");
 
-        // Answer all questions
-        cy.contains("button", "correct").click();
-        cy.contains("button", "correct").click();
+        // Answer all questions correctly
+        cy.contains("correct").click();
+        cy.contains("correct").click();
 
         // THEN the quiz is over
         cy.contains("h2", "Quiz Completed").should("be.visible");
@@ -63,8 +63,8 @@ describe("<Quiz />", () => {
         cy.wait("@getQuestions");
 
         // Answer one question correctly and one incorrectly
-        cy.contains("button", "correct").click();
-        cy.contains("button", "wrong").click();
+        cy.contains("correct").click();
+        cy.contains("wrong").click();
 
         // THEN I can view my score
         cy.contains("h2", "Quiz Completed").should("be.visible");
@@ -77,8 +77,8 @@ describe("<Quiz />", () => {
         cy.wait("@getQuestions");
 
         // Answer all questions correctly
-        cy.contains("button", "correct").click();
-        cy.contains("button", "correct").click();
+        cy.contains("correct").click();
+        cy.contains("correct").click();
 
         // THEN the quiz is over
         cy.contains("h2", "Quiz Completed").should("be.visible");
@@ -87,6 +87,6 @@ describe("<Quiz />", () => {
         cy.contains("button", "Take New Quiz").click();
 
         // THEN I should see the first question again
-        cy.get("h2").should("contain", "Test question 1");
+        cy.contains("h2", "Test question 1").should("be.visible");
     });
 });
