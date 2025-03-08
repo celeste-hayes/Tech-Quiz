@@ -1,14 +1,20 @@
 import db from '../config/connection.js';
-import { Question } from '../models/index.js'
+import { Question } from '../models/index.js';
 import cleanDB from './cleanDb.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-import questionData from './pythonQuestions.json' assert{ type: 'json'};
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load JSON correctly
+const questionData = JSON.parse(fs.readFileSync(path.join(__dirname, 'pythonQuestions.json'), 'utf-8'));
 
 try {
   await db();
   await cleanDB();
 
-  // bulk create each model
   await Question.insertMany(questionData);
 
   console.log('Seeding completed successfully!');
