@@ -1,21 +1,20 @@
 [
   {
-    "question": "Test question 1",
+    "question": "Test question 1?",
     "answers": [
-      { "text": "correct", "correct": true },
-      { "text": "wrong", "correct": false },
-      { "text": "wrong", "correct": false },
-      { "text": "wrong", "correct": false }
+      { "text": "incorrect", "isCorrect": false },
+      { "text": "correct", "isCorrect": true },
+      { "text": "5", "isCorrect": false },
+      { "text": "6", "isCorrect": false }
     ]
   },
   {
-    "question": "Test question 2",
+    "question": "Test question 2?",
     "answers": [
-      { "text": "wrong", "correct": false },
-      { "text": "wrong", "correct": false },
-      { "text": "correct", "correct": true },
-      { "text": "wrong", "correct": false }
+      { "text": "incorrect", "isCorrect": false },
+      { "text": "4", "isCorrect": false },
+      { "text": "correct", "isCorrect": true },
+      { "text": "3", "isCorrect": false }
     ]
   }
 ]
-
